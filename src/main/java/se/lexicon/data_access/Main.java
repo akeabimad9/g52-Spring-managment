@@ -4,14 +4,23 @@ package se.lexicon.data_access;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+   annotationConfigApplicationContext context=new annotationConfigApplicationContext(ComponentScanConfig.class);
+   StudentDao studentDao=context.getBean(StudentDao.class);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+   // Add some students
+        studentDao.save(new Student(1, "John Doe"));
+        studentDao.save(new Student(1, "Jane Smith"));
+        // Find all students
+        System.out.println("All Students:  " + studentDao.findAll());
+
+        // Find by ID
+        System.out.println("Find by ID 1:  " + studentDao.findById(1));
+        // Delete student
+        studentDao.delete(1);
+        System.out.println("All Students after deletion: "+ studentDao.findAll());
+        context.close();
+
+
         }
     }
 }
