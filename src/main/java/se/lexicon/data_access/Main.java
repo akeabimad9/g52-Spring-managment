@@ -1,26 +1,30 @@
-package se.lexicon.data_access;
+package se.lexicon;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import se.lexicon.data_access.StudentDao;
+import se.lexicon.models.Student;
+
 public class Main {
     public static void main(String[] args) {
-   annotationConfigApplicationContext context=new annotationConfigApplicationContext(ComponentScanConfig.class);
-   StudentDao studentDao=context.getBean(StudentDao.class);
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(ComponentScanConfig.class);
 
-   // Add some students
+        StudentDao studentDao = context.getBean(StudentDao.class);
+
+        // Add some students
         studentDao.save(new Student(1, "John Doe"));
-        studentDao.save(new Student(1, "Jane Smith"));
+        studentDao.save(new Student(2, "Jane Smith"));
+
         // Find all students
-        System.out.println("All Students:  " + studentDao.findAll());
+        System.out.println("All Students: " + studentDao.findAll());
 
         // Find by ID
-        System.out.println("Find by ID 1:  " + studentDao.findById(1));
-        // Delete student
+        System.out.println("Find by ID 1: " + studentDao.findById(1));
+
+        // Delete a student
         studentDao.delete(1);
-        System.out.println("All Students after deletion: "+ studentDao.findAll());
+        System.out.println("All Students after deletion: " + studentDao.findAll());
+
         context.close();
-
-
-        }
     }
 }
